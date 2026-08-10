@@ -1,9 +1,14 @@
-param(
-	[Parameter(Mandatory = $true)]
-	[string]$V
-)
+$csproj = Join-Path $PSScriptRoot "..\Source\RescuePC.Software.EntityFrameworkCore\RescuePC.Software.EntityFrameworkCore.csproj"
+$xml = [xml](Get-Content $csproj)
+$version = $xml.Project.PropertyGroup.Version
 
-$tag = "v$V"
+if (-not $version) {
+	Write-Error "Nie znaleziono elementu <Version> w pliku $csproj."
+	exit 1
+}
+
+Write-Host "Wersja odczytana z csproj: $version" -ForegroundColor DarkCyan
+$tag = "v$version"
 
 $status = git status --porcelain
 if ($status) {
@@ -18,7 +23,7 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-Write-Host "Tworzenie taga $tag..." -ForegroundColor Cyan
+Write-Host "Tworzenie taga $tag (wersja z csproj: $version)..." -ForegroundColor Cyan
 
 git tag $tag
 if ($LASTEXITCODE -ne 0) {
