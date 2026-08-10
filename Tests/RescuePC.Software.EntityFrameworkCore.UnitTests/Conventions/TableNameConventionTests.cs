@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using RescuePC.Software.EntityFrameworkCore.Conventions;
 
 namespace RescuePC.Software.EntityFrameworkCore.Tests.Conventions;
 
