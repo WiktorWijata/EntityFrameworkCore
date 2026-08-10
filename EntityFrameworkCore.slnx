@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/" />
+  <Folder Name="/Source/" />
+  <Folder Name="/Tests/" />
+</Solution>
