@@ -9,7 +9,6 @@
     <Project Path="Source/RescuePC.Software.EntityFrameworkCore/RescuePC.Software.EntityFrameworkCore.csproj" Id="ea96d0af-c140-424f-9122-c08a2d3d356e" />
   </Folder>
   <Folder Name="/Tests/">
-    <Project Path="Tests/RescuePC.Software.EntityFrameworkCore.Tests/RescuePC.Software.EntityFrameworkCore.Tests.csproj" />
     <Project Path="Tests/RescuePC.Software.EntityFrameworkCore.UnitTests/RescuePC.Software.EntityFrameworkCore.UnitTests.csproj" Id="dd9dcc74-ebab-4389-9596-7f85e0a898a5" />
   </Folder>
 </Solution>
