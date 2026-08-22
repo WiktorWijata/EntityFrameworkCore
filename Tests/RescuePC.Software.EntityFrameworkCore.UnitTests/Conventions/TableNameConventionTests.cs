@@ -30,6 +30,39 @@ public class TableNameConventionTests
         Assert.Equal(nameof(AnotherEntity), context.Model.FindEntityType(typeof(AnotherEntity))!.GetTableName());
     }
 
+    [Fact]
+    public void TableName_ShouldNotBeOverridden_ForSharedClrTypeEntities()
+    {
+        var options = new DbContextOptionsBuilder<SharedTypeDbContext>()
+            .UseInMemoryDatabase("TableNameConventionSharedTypeTest")
+            .Options;
+
+        using var context = new SharedTypeDbContext(options);
+        var entityType = context.Model.FindEntityType("SharedEntityOne");
+
+        Assert.NotNull(entityType);
+        Assert.True(entityType.HasSharedClrType);
+        Assert.Equal("SharedEntityOne", entityType.GetTableName());
+    }
+
+    private class SharedTypeDbContext : EfContext
+    {
+        public SharedTypeDbContext(DbContextOptions options) : base(options) { }
+
+        protected override string DefaultSchema => "test";
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.SharedTypeEntity<Dictionary<string, object>>("SharedEntityOne", b =>
+            {
+                b.Property<int>("Id");
+                b.HasKey("Id");
+            });
+        }
+    }
+
     private class TestDbContext : EfContext
     {
         public DbSet<SampleEntity> SampleEntities => Set<SampleEntity>();
@@ -48,5 +81,6 @@ public class TableNameConventionTests
     private class AnotherEntity
     {
         public int Id { get; set; }
+
     }
 }

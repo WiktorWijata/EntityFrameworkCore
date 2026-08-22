@@ -10,6 +10,11 @@ public class TableNameConvention : IModelFinalizingConvention
     {
         foreach (var entityType in modelBuilder.Metadata.GetEntityTypes())
         {
+            if (entityType.HasSharedClrType)
+            {
+                continue;
+            }
+
             entityType.SetTableName(entityType.ClrType.Name);
         }
     }
